@@ -21,6 +21,7 @@ export const CardsList = (): ReactElement => {
                         pressure={city.pressure}
                         humidity={city.humidity}
                         visibility={city.visibility}
+                        weatherId={city.weatherId}
                     />
                 </div>
             ))

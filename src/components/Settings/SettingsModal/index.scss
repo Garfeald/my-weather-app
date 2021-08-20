@@ -1,0 +1,78 @@
+.SettingsModal{
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0,0,0,0.7);
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.5s;
+  &__image-cross {
+    width: 20px;
+    height: 20px;
+    &:hover{
+      cursor: pointer;
+    }
+  }
+  &__modal-content {
+    padding: 20px;
+    border-radius: 5px;
+    background-color: #ffffff;
+    width: 250px;
+    height: 400px;
+
+    &__cross{
+      width: 100%;
+      display: flex;
+      justify-content: flex-end;
+    }
+  }
+  &__block-form {
+    & input {
+      width: 90%;
+      padding: 10px 10px;
+      border: 1px blue solid;
+      border-radius: 5px;
+    }
+    &__submit{
+      margin: 10px 0;
+      width: 100%!important;
+      border-radius: 5px;
+      cursor: pointer;
+      background-color: blue;
+      color: white;
+      border: none!important;
+    }
+  }
+  &__cities-list {
+    max-height: 250px;
+    overflow-y: auto;
+    margin-top: 20px;
+    &__item {
+      margin: 10px 0;
+      padding: 5px;
+      display: flex;
+      justify-content: space-between;
+      list-style: none;
+      background-color: #DCDCDC;
+      border-radius: 5px;
+      & i {
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+.submit-disabled {
+  background-color: #a9a9ab;
+  color: white;
+}
+
+.SettingsModal.active{
+  opacity: 1;
+  pointer-events: all;
+}

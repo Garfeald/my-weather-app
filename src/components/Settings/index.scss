@@ -1,0 +1,19 @@
+.Settings {
+  max-width: 250px;
+  margin: 10px 0;
+  &__icon {
+    position: fixed;
+    right: 40%;
+    padding-left: 250px;
+    font-size: 35px;
+    flex-direction: inherit;
+    cursor: pointer;
+    text-align: right;
+  }
+}
+
+@media (max-width: 650px) {
+  .Settings__icon {
+    right: 20%;
+  }
+}
