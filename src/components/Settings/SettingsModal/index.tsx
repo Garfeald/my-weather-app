@@ -14,9 +14,15 @@ export const SettingsModal = ({disabled, setDisabled}: SettingsModalType) => {
 
     const [value, setValue] = useState<string>()
 
-    const [citiesList, setCitiesList] = useState<ICardProps[]>([])
+    
 
     const { cityWeather } = useSelector<AppState, ICityWeatherStore>(state => state.cityWeather)
+
+    const localWeatherAppCityList = localStorage.getItem('weatherAppCityList')
+
+    const [citiesList, setCitiesList] = useState<ICardProps[]>([])
+
+    const [citiesTitlesList, setCitiesTitlesList] = useState<string[]>()
 
     useEffect(() => {
         cityWeather && setCitiesList(
@@ -41,6 +47,9 @@ export const SettingsModal = ({disabled, setDisabled}: SettingsModalType) => {
     useEffect(() => {
         // @ts-ignore
         citiesList && dispatch(addCardProps(uniq(citiesList)))
+        citiesList.length > 0 
+            ? localStorage.setItem('weatherAppCityList', JSON.stringify(uniq(citiesList).map(city => city.title)))
+            : localStorage.setItem('weatherAppCityList', '')
     }, [citiesList])
 
     const dispatch = useDispatch()
@@ -102,7 +111,15 @@ export const SettingsModal = ({disabled, setDisabled}: SettingsModalType) => {
                         <div className={`${base}__cities-list`}>
                             <ul>
                                 {citiesList && uniq(citiesList).map(city => (
-                                    <div className={`${base}__cities-list__item`} key={city.id}>
+                                    <div 
+                                        className={`${base}__cities-list__item`} 
+                                        key={city.id}
+                                        // onDragStart={}
+                                        // onDragLeave={}
+                                        // onDragEnd={}
+                                        // onDragOver={}
+                                        // onDrop={}
+                                    >
                                         <li>{city.title}</li>
                                         <i className="bi bi-trash" onClick={() => city.id && deleteCity(city.id)}/>
                                     </div>
