@@ -25,6 +25,10 @@ export const SettingsModal = ({disabled, setDisabled}: SettingsModalType) => {
     const [citiesTitlesList, setCitiesTitlesList] = useState<string[]>()
 
     useEffect(() => {
+        localWeatherAppCityList && JSON.parse(localWeatherAppCityList).map((title: string) => dispatch(cityWeatherFetchAsync(title)))
+    },[])
+
+    useEffect(() => {
         cityWeather && setCitiesList(
             citiesList =>
                 [ ...citiesList, {
@@ -47,9 +51,8 @@ export const SettingsModal = ({disabled, setDisabled}: SettingsModalType) => {
     useEffect(() => {
         // @ts-ignore
         citiesList && dispatch(addCardProps(uniq(citiesList)))
-        citiesList.length > 0 
-            ? localStorage.setItem('weatherAppCityList', JSON.stringify(uniq(citiesList).map(city => city.title)))
-            : localStorage.setItem('weatherAppCityList', '')
+        citiesList && citiesList.length > 0 
+            && localStorage.setItem('weatherAppCityList', JSON.stringify(uniq(citiesList).map(city => city.title)))
     }, [citiesList])
 
     const dispatch = useDispatch()
@@ -66,6 +69,7 @@ export const SettingsModal = ({disabled, setDisabled}: SettingsModalType) => {
 
     const deleteCity = (id: number) => {
         setCitiesList(citiesList.filter(city => city.id !== id))
+        citiesList && localStorage.setItem('weatherAppCityList', '')
     }
 
     const uniq = function(xs: ICardProps[]) {
