@@ -14,15 +14,11 @@ export const SettingsModal = ({disabled, setDisabled}: SettingsModalType) => {
 
     const [value, setValue] = useState<string>()
 
-    
-
     const { cityWeather } = useSelector<AppState, ICityWeatherStore>(state => state.cityWeather)
 
     const localWeatherAppCityList = localStorage.getItem('weatherAppCityList')
 
     const [citiesList, setCitiesList] = useState<ICardProps[]>([])
-
-    const [citiesTitlesList, setCitiesTitlesList] = useState<string[]>()
 
     useEffect(() => {
         localWeatherAppCityList && JSON.parse(localWeatherAppCityList).map((title: string) => dispatch(cityWeatherFetchAsync(title)))
@@ -67,6 +63,13 @@ export const SettingsModal = ({disabled, setDisabled}: SettingsModalType) => {
         setValue(value);
     };
 
+    const onInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        if(e.key === 'Enter' && value) {
+            dispatch(cityWeatherFetchAsync(value))
+            setValue('')
+        }
+    }
+
     const deleteCity = (id: number) => {
         setCitiesList(citiesList.filter(city => city.id !== id))
         citiesList && localStorage.setItem('weatherAppCityList', '')
@@ -102,6 +105,7 @@ export const SettingsModal = ({disabled, setDisabled}: SettingsModalType) => {
                         type="text"
                         value={value || ''}
                         onChange={(e) => handleInputChange(e)}
+                        onKeyDown={(e) => onInputKeyDown(e)}
                     />
                     <input
                         id="modal-input"
